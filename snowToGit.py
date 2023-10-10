@@ -26,11 +26,6 @@ def capture(email_subject, email_body, source_branch, target_branch, repo_path, 
     # Email sending code (same as before)
     # def send_email(subject, body):
     def send_email(subject, body, sender_email, receiver_email, password):
-        # sender_email = 'kasmosnowflake@gmail.com'
-        # receiver_email = 'bhanuprakash.sigireddy1997@gmail.com'
-        # receiver_email = 'akhtarsajimujjaman@gmail.com'
-        # password = 'clnxwbblzitvytge'
-
         message = MIMEMultipart()
         message['From'] = sender_email
         message['To'] = receiver_email
@@ -117,17 +112,6 @@ def capture(email_subject, email_body, source_branch, target_branch, repo_path, 
     observer.schedule(event_handler, path=repo_path, recursive=True)  # Recursive=True to traverse folders
     observer.start()
 
-
-    # # Snowflake connection parameters (replace with your details)
-    # connection = sf.connect(
-    #     user="kasmodev",
-    #     password="Kasmo@123",
-    #     account="px95694.ap-southeast-1",
-    #     warehouse="COMPUTE_WH",
-    #     database="INSURANCE_ANALYTICS",
-    #     schema = "DL_PC_EXT"
-    # )
-
     connection=sf.connect(**sf_params)
 
     cursor = connection.cursor()
@@ -146,11 +130,7 @@ def capture(email_subject, email_body, source_branch, target_branch, repo_path, 
         except Exception as e:
             print(f'Error executing query: {e}')
 
-    # drop_output_folder = r'C:\Users\ThinkPad\OneDrive - kasmo.co\Desktop\devops_project\devops_dev\pipe\drop_scripts'
-
     drop_output_folder = f"{repo_path}\\drop_scripts"
-
-    # git_local_repo_path = r"C:\Users\ThinkPad\OneDrive - kasmo.co\Desktop\devops_project\devops_dev\snow"
 
     def warehouse():
         query = "SHOW WAREHOUSES;"
