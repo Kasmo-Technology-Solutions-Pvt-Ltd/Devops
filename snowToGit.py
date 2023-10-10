@@ -139,8 +139,7 @@ def capture(email_subject, email_body, source_branch, target_branch, repo_path, 
 
         # Create a folder to save the SQL files if it doesn't exist
         create_output_folder = f"{repo_path}\\create_scripts\\warehouses"
-        # create_output_folder = f"{repo_path}\\create_scripts\\users"
-        # create_output_folder = r'C:\Users\ThinkPad\OneDrive - kasmo.co\Desktop\devops_project\devops_dev\pipe\create_scripts\warehouses'
+       
 
         if not os.path.exists(create_output_folder):
             os.makedirs(create_output_folder)
