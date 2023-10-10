@@ -17,9 +17,6 @@ imap_port = 993
 sender_email = 'kasmosnowflake@gmail.com'
 sender_password = 'clnxwbblzitvytge'
 
-
-# repo_path = r'C:\Users\ThinkPad\OneDrive - kasmo.co\Desktop\devops_project\devops_dev\snowdev'
-
 def run_git_command(command, cwd=None):
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, cwd=cwd)
     stdout, stderr = process.communicate()
@@ -167,17 +164,6 @@ def notify(csv_file_path,source_branch,target_branch, execution_status, path,sf_
     # Call the function to check for failures
     failures_exist, error_rows, header = check_failures(csv_file_path, status_column_index)
 
-
-
-    # Connect to Snowflake again to retrieve email configuration data
-    # conn = snowflake.connector.connect(
-    #     user="kasmodev",
-    #     password="Kasmo@123",
-    #     account="px95694.ap-southeast-1",
-    #     warehouse="COMPUTE_WH",
-    #     database="INSURANCE_ANALYTICS",
-    #     schema="DL_PC_EXT"
-    # )
     conn = snowflake.connector.connect(**sf_params)
 
     cursor = conn.cursor()
@@ -216,7 +202,6 @@ def notify(csv_file_path,source_branch,target_branch, execution_status, path,sf_
             send_email(subject, message, to_email)
             print(f"Immediate email sent to {to_email} for failures.")
 
-
     else:
         execution_status=True
         if "uat" in target_branch.lower():
@@ -236,7 +221,7 @@ def notify(csv_file_path,source_branch,target_branch, execution_status, path,sf_
             # Send the email using the retrieved or default values
             send_email(subject, message, to_email)
             print(f"Email sent to {to_email} based on retrieved data.")
-
+            
             email_listener = EmailListener(subject,source_branch,target_branch,path)
             email_listener.start()
             email_listener.join()
